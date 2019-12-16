@@ -3,7 +3,6 @@ import { MerkleTree } from 'merkletreejs';
 import { readFile } from 'fs';
 
 export class NotarizeTree extends NotarizeBase {
-    private tree: MerkleTree;
     private leaves: string[];
 
     constructor(algo: HashAlgo) {
