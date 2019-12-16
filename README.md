@@ -1,5 +1,6 @@
 # Lisk Notarize
 This library helps you to notarize and timestamp single documents or large sets of documents (with merkle trees), using the immutable lisk blockchain.
+ 
 
 ## Notarize a signle documents
 

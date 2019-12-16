@@ -1,6 +1,7 @@
 import sha256 from 'crypto-js/sha256';
 import sha512 from 'crypto-js/sha512';
 import { transfer } from '@liskhq/lisk-transactions';
+import { getAddressFromPassphrase } from '@liskhq/lisk-cryptography';
 import { APIClient } from '@liskhq/lisk-api-client';
 
 
@@ -28,23 +29,16 @@ export abstract class NotarizeBase {
         return this.hashFunc(data);
     }
 
-    async broadcast(opts: { network: 'test' | 'main', secret: string; secret2?: string; address?: string }) {
+    async broadcast(opts: { network: 'test' | 'main', secret: string; secret2?: string }) {
         const dbc = this.build();
-        
+
         const txopt: any = {
             amount: '100',
             data: dbc.root,
             passphrase: opts.secret,
         };
 
-        if ('address' in opts) {
-            txopt.recipientId = opts.address;
-        } else {
-            if (opts.network == 'main')
-                txopt.recipientId = '2324852447570841050L';
-            else
-                txopt.recipientId = '214676230899515903L';
-        }
+        txopt.recipientId = getAddressFromPassphrase(opts.secret);
 
         if ('secret2' in opts)
             txopt.secondPassphrase = opts.secret2;
