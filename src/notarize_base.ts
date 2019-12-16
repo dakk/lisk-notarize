@@ -30,8 +30,7 @@ export abstract class NotarizeBase {
 
     async broadcast(opts: { network: 'test' | 'main', secret: string; secret2?: string; address?: string }) {
         const dbc = this.build();
-        console.log(dbc);
-
+        
         const txopt: any = {
             amount: '100',
             data: dbc.root,
@@ -53,6 +52,6 @@ export abstract class NotarizeBase {
         const tx = transfer(txopt);
         const ac = opts.network == 'main' ? APIClient.createMainnetAPIClient() : APIClient.createTestnetAPIClient();
         const res = await ac.transactions.broadcast(tx);
-        console.log(res.data);
+        return res.data;
     }
 }
