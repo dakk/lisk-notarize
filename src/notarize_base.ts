@@ -29,7 +29,7 @@ export abstract class NotarizeBase {
         return this.hashFunc(data);
     }
 
-    async broadcast(opts: { network: 'test' | 'main', secret: string; secret2?: string }) {
+    async broadcast(opts: { network: 'test' | 'main'; secret: string; secret2?: string; address?: string }) {
         const dbc = this.build();
 
         const txopt: any = {
@@ -38,7 +38,7 @@ export abstract class NotarizeBase {
             passphrase: opts.secret,
         };
 
-        txopt.recipientId = getAddressFromPassphrase(opts.secret);
+        txopt.recipientId = opts.address || getAddressFromPassphrase(opts.secret);
 
         if ('secret2' in opts)
             txopt.secondPassphrase = opts.secret2;
